@@ -37,12 +37,12 @@
             @csrf
 
             @for ($i = 0; $i < 3; $i++)
-            <div>
-                <label class="block mb-1 text-sm font-medium text-slate-300">Email του παίχτη {{ $i + 1 }}</label>
-                <input type="email" name="emails[]" required
-                    class="bg-slate-900 border border-slate-600 text-white text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 placeholder-slate-600"
-                    placeholder="player{{$i+1}}@example.com">
-            </div>
+                <div>
+                    <label class="block mb-1 text-sm font-medium text-slate-300">Email του παίχτη {{ $i + 1 }}</label>
+                    <input type="email" name="emails[]" required
+                        class="bg-slate-900 border border-slate-600 text-white text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 placeholder-slate-600"
+                        placeholder="player{{$i+1}}@example.com">
+                </div>
             @endfor
 
             <button type="submit"

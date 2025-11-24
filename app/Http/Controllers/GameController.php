@@ -15,16 +15,17 @@ class GameController extends Controller
 
     public function startGame(Request $request)
     {
-        // 1. Validate inputs (Greek messages)
+
         $request->validate([
-            'emails' => 'required|array|min:3|max:3',
+            'emails' => 'required|array|min:3',
             'emails.*' => 'required|email|distinct',
         ]);
 
         $players = $request->input('emails');
+        $playerCount = count($players);
 
-        // 2. WORD BANK (>500 Words)
-        // A massive manual list to ensure variety.
+        $impostorCount = max(1, floor($playerCount / 3));
+
         $wordBank = [
             // --- ANIMALS ---
             'Dog', 'Cat', 'Elephant', 'Lion', 'Tiger', 'Bear', 'Zebra', 'Giraffe', 'Monkey', 'Penguin',
@@ -101,28 +102,31 @@ class GameController extends Controller
             'Painting', 'Drawing', 'Sculpture', 'Photo', 'Movie', 'Play', 'Dance', 'Poem', 'Story', 'Book'
         ];
 
-        // Pick 2 distinct random keys from the massive bank
-        // array_rand ensures the keys are different, so words will always be distinct.
+        // Pick 2 distinct random keys
         $randomKeys = array_rand($wordBank, 2);
-
         $crewWord = $wordBank[$randomKeys[0]];
         $impostorWord = $wordBank[$randomKeys[1]];
 
-        // 3. Select a random impostor
-        $impostorIndex = array_rand($players);
+        $randomIndices = array_rand($players, $impostorCount);
 
-        // 4. Loop through players and send emails
+
+        if (!is_array($randomIndices)) {
+            $randomIndices = [$randomIndices];
+        }
+
+
         foreach ($players as $index => $email) {
 
-            $isImpostor = ($index === $impostorIndex);
+            // Check if current player index is in the list of impostors
+            $isImpostor = in_array($index, $randomIndices);
 
+            // Assign word
             $assignedWord = $isImpostor ? $impostorWord : $crewWord;
 
-            // Pass BOTH arguments to the Mail class
+            // Send email
             Mail::to($email)->send(new RoleAssignment($isImpostor, $assignedWord));
         }
 
-        // Success message (Greek)
-        return back()->with('status', "Το email στάλθηκε! Τσεκάρετε τα emails σας για να δείτε ποιός είναι ο Impostor.");
+        return back()->with('status', "Το email στάλθηκε σε $playerCount παίκτες!");
     }
 }

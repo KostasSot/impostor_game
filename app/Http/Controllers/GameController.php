@@ -27,79 +27,56 @@ class GameController extends Controller
         $impostorCount = max(1, floor($playerCount / 3));
 
         $wordBank = [
-            // --- ANIMALS ---
-            'Dog', 'Cat', 'Elephant', 'Lion', 'Tiger', 'Bear', 'Zebra', 'Giraffe', 'Monkey', 'Penguin',
-            'Kangaroo', 'Panda', 'Wolf', 'Fox', 'Rabbit', 'Mouse', 'Hamster', 'Eagle', 'Owl', 'Shark',
-            'Whale', 'Dolphin', 'Octopus', 'Spider', 'Snake', 'Lizard', 'Frog', 'Turtle', 'Butterfly', 'Bee',
-            'Ant', 'Beetle', 'Scorpion', 'Crab', 'Lobster', 'Jellyfish', 'Starfish', 'Seahorse', 'Coral', 'Clam',
-            'Camel', 'Donkey', 'Horse', 'Cow', 'Pig', 'Sheep', 'Goat', 'Chicken', 'Duck', 'Turkey',
-            'Crocodile', 'Alligator', 'Gorilla', 'Chimpanzee', 'Koala', 'Platypus', 'Raccoon', 'Squirrel', 'Bat', 'Hedgehog',
-            'Peacock', 'Parrot', 'Flamingo', 'Swan', 'Goose', 'Pigeon', 'Crow', 'Raven', 'Woodpecker', 'Ostrich',
-            'Rhino', 'Hippo', 'Buffalo', 'Deer', 'Moose', 'Elk', 'Bison', 'Gazelle', 'Cheetah', 'Leopard',
-
-            // --- FOOD & DRINK ---
-            'Pizza', 'Burger', 'Sushi', 'Pasta', 'Salad', 'Apple', 'Banana', 'Orange', 'Grape', 'Strawberry',
-            'Watermelon', 'Chocolate', 'Cake', 'Ice Cream', 'Cookie', 'Bread', 'Cheese', 'Milk', 'Coffee', 'Tea',
-            'Juice', 'Soda', 'Beer', 'Wine', 'Chicken', 'Steak', 'Fish', 'Rice', 'Potato', 'Tomato',
-            'Onion', 'Garlic', 'Pepper', 'Salt', 'Sugar', 'Butter', 'Oil', 'Vinegar', 'Sauce', 'Soup',
-            'Sandwich', 'Toast', 'Pancake', 'Waffle', 'Egg', 'Bacon', 'Sausage', 'Ham', 'Beef', 'Pork',
-            'Taco', 'Burrito', 'Nachos', 'Fries', 'Chips', 'Popcorn', 'Donut', 'Croissant', 'Muffin', 'Bagel',
-            'Pineapple', 'Mango', 'Peach', 'Pear', 'Cherry', 'Lemon', 'Lime', 'Avocado', 'Coconut', 'Berry',
-            'Carrot', 'Broccoli', 'Spinach', 'Corn', 'Peas', 'Beans', 'Mushroom', 'Pumpkin', 'Cucumber', 'Lettuce',
-
-            // --- OBJECTS & HOUSEHOLD ---
-            'Table', 'Chair', 'Bed', 'Sofa', 'Lamp', 'Computer', 'Phone', 'Television', 'Clock', 'Mirror',
-            'Door', 'Window', 'Key', 'Lock', 'Carpet', 'Rug', 'Curtain', 'Pillow', 'Blanket', 'Sheet',
-            'Cup', 'Glass', 'Plate', 'Bowl', 'Fork', 'Spoon', 'Knife', 'Bottle', 'Can', 'Box',
-            'Bag', 'Backpack', 'Wallet', 'Purse', 'Umbrella', 'Comb', 'Brush', 'Toothbrush', 'Soap', 'Towel',
-            'Shampoo', 'Perfume', 'Makeup', 'Razor', 'Scissors', 'Tape', 'Glue', 'Paper', 'Pen', 'Pencil',
-            'Notebook', 'Book', 'Magazine', 'Newspaper', 'Letter', 'Envelope', 'Stamp', 'Calendar', 'Map', 'Globe',
-
-            // --- TECHNOLOGY & TOOLS ---
-            'Laptop', 'Tablet', 'Keyboard', 'Mouse', 'Monitor', 'Printer', 'Scanner', 'Camera', 'Microphone', 'Speaker',
-            'Headphones', 'Earbuds', 'Charger', 'Battery', 'Cable', 'Wire', 'Switch', 'Plug', 'Socket', 'Bulb',
-            'Fan', 'Heater', 'AC', 'Fridge', 'Oven', 'Microwave', 'Toaster', 'Blender', 'Mixer', 'Kettle',
-            'Hammer', 'Screwdriver', 'Wrench', 'Pliers', 'Saw', 'Drill', 'Nail', 'Screw', 'Bolt', 'Nut',
-            'Ladder', 'Shovel', 'Rake', 'Hoe', 'Axe', 'Chain', 'Rope', 'Bucket', 'Mop', 'Broom',
-
-            // --- TRANSPORTATION ---
-            'Car', 'Bus', 'Train', 'Airplane', 'Boat', 'Bicycle', 'Motorcycle', 'Scooter', 'Truck', 'Van',
-            'Taxi', 'Ambulance', 'Police Car', 'Fire Truck', 'Tractor', 'Helicopter', 'Jet', 'Rocket', 'Spaceship', 'Submarine',
-            'Ship', 'Yacht', 'Ferry', 'Canoe', 'Kayak', 'Skateboard', 'Rollerblades', 'Wheelchair', 'Stroller', 'Wagon',
-            'Subway', 'Tram', 'Cable Car', 'Lift', 'Elevator', 'Escalator', 'Bridge', 'Tunnel', 'Road', 'Highway',
-
-            // --- PROFESSIONS ---
-            'Doctor', 'Nurse', 'Teacher', 'Student', 'Engineer', 'Lawyer', 'Police', 'Firefighter', 'Artist', 'Musician',
-            'Actor', 'Chef', 'Farmer', 'Pilot', 'Driver', 'Mechanic', 'Electrician', 'Plumber', 'Carpenter', 'Scientist',
-            'Astronaut', 'Soldier', 'Detective', 'Spy', 'Judge', 'King', 'Queen', 'Prince', 'Princess', 'Wizard',
-            'Writer', 'Journalist', 'Photographer', 'Director', 'Designer', 'Programmer', 'Gamer', 'Athlete', 'Coach', 'Referee',
-
-            // --- BUILDINGS & PLACES ---
-            'House', 'Apartment', 'Hotel', 'School', 'University', 'Hospital', 'Clinic', 'Pharmacy', 'Bank', 'Post Office',
-            'Library', 'Museum', 'Theater', 'Cinema', 'Stadium', 'Gym', 'Park', 'Zoo', 'Aquarium', 'Beach',
-            'Forest', 'Mountain', 'River', 'Lake', 'Sea', 'Ocean', 'Desert', 'Jungle', 'Island', 'Cave',
-            'Castle', 'Palace', 'Tower', 'Bridge', 'Church', 'Mosque', 'Synagogue', 'Temple', 'Shrine', 'Cathedral',
-            'Farm', 'Barn', 'Factory', 'Warehouse', 'Office', 'Store', 'Shop', 'Mall', 'Market', 'Restaurant',
-
-            // --- FANTASY & MYTHOLOGY ---
-            'Dragon', 'Unicorn', 'Phoenix', 'Mermaid', 'Ghost', 'Vampire', 'Werewolf', 'Zombie', 'Alien', 'Robot',
-            'Elf', 'Dwarf', 'Giant', 'Troll', 'Goblin', 'Witch', 'Wizard', 'Sorcerer', 'Fairy', 'Angel',
-            'Demon', 'God', 'Goddess', 'Hero', 'Villain', 'Monster', 'Beast', 'Spirit', 'Soul', 'Magic',
-
-            // --- CLOTHING ---
-            'Shirt', 'Pants', 'Dress', 'Skirt', 'Shoe', 'Sock', 'Hat', 'Glove', 'Scarf', 'Jacket',
-            'Coat', 'Belt', 'Tie', 'Ring', 'Necklace', 'Earring', 'Bracelet', 'Watch', 'Glasses', 'Sunglasses',
-            'Boot', 'Sandal', 'Slipper', 'Heel', 'Sneaker', 'Uniform', 'Costume', 'Pajamas', 'Swimsuit', 'Bikini',
-
-            // --- BODY PARTS ---
-            'Head', 'Hair', 'Face', 'Eye', 'Ear', 'Nose', 'Mouth', 'Tooth', 'Tongue', 'Lip',
-            'Neck', 'Shoulder', 'Arm', 'Elbow', 'Hand', 'Finger', 'Thumb', 'Chest', 'Stomach', 'Back',
-            'Leg', 'Knee', 'Foot', 'Toe', 'Heart', 'Brain', 'Lung', 'Bone', 'Blood', 'Skin',
-
-            // --- MUSIC & ART ---
-            'Guitar', 'Piano', 'Drum', 'Violin', 'Flute', 'Trumpet', 'Saxophone', 'Harp', 'Cello', 'Clarinet',
-            'Song', 'Melody', 'Rhythm', 'Beat', 'Lyrics', 'Note', 'Chord', 'Band', 'Orchestra', 'Concert',
-            'Painting', 'Drawing', 'Sculpture', 'Photo', 'Movie', 'Play', 'Dance', 'Poem', 'Story', 'Book'
+            'Σκύλος', 'Πίτσα', 'Τραπέζι', 'Λάπτοπ', 'Αυτοκίνητο', 'Γιατρός', 'Σπίτι', 'Δράκος', 'Πουκάμισο', 'Κεφάλι', 'Κιθάρα',
+            'Γάτα', 'Μπέργκερ', 'Καρέκλα', 'Τάμπλετ', 'Λεωφορείο', 'Νοσοκόμα', 'Διαμέρισμα', 'Μονόκερος', 'Παντελόνι', 'Μαλλιά', 'Πιάνο',
+            'Ελέφαντας', 'Σούσι', 'Κρεβάτι', 'Πληκτρολόγιο', 'Τρένο', 'Δάσκαλος', 'Ξενοδοχείο', 'Φοίνικας', 'Φόρεμα', 'Πρόσωπο', 'Τύμπανο',
+            'Λιοντάρι', 'Ζυμαρικά', 'Καναπές', 'Ποντίκι', 'Αεροπλάνο', 'Μαθητής', 'Σχολείο', 'Γοργόνα', 'Φούστα', 'Μάτι', 'Βιολί',
+            'Τίγρης', 'Σαλάτα', 'Λάμπα', 'Οθόνη', 'Βάρκα', 'Μηχανικός', 'Πανεπιστήμιο', 'Φάντασμα', 'Παπούτσι', 'Αυτί', 'Φλάουτο',
+            'Αρκούδα', 'Μήλο', 'Υπολογιστής', 'Εκτυπωτής', 'Ποδήλατο', 'Δικηγόρος', 'Νοσοκομείο', 'Βρικόλακας', 'Κάλτσα', 'Μύτη', 'Τρομπέτα',
+            'Ζέβρα', 'Μπανάνα', 'Τηλέφωνο', 'Σαρωτής', 'Μοτοσυκλέτα', 'Αστυνομικός', 'Κλινική', 'Λυκάνθρωπος', 'Καπέλο', 'Στόμα', 'Σαξόφωνο',
+            'Καμηλοπάρδαλη', 'Πορτοκάλι', 'Τηλεόραση', 'Κάμερα', 'Σκούτερ', 'Πυροσβέστης', 'Φαρμακείο', 'Ζόμπι', 'Γάντι', 'Δόντι', 'Άρπα',
+            'Μαϊμού', 'Σταφύλι', 'Ρολόι', 'Μικρόφωνο', 'Φορτηγό', 'Καλλιτέχνης', 'Τράπεζα', 'Εξωγήινος', 'Κασκόλ', 'Γλώσσα', 'Τσέλο',
+            'Πιγκουίνος', 'Φράουλα', 'Καθρέφτης', 'Ηχείο', 'Βαν', 'Μουσικός', 'Ταχυδρομείο', 'Ρομπότ', 'Μπουφάν', 'Χείλος', 'ΚλαριΝέτο',
+            'Καγκουρό', 'Καρπούζι', 'Πόρτα', 'Ακουστικά', 'Ταξί', 'Ηθοποιός', 'Βιβλιοθήκη', 'Ξωτικό', 'Παλτό', 'Λαιμός', 'Τραγούδι',
+            'Πάντα', 'Σοκολάτα', 'Παράθυρο', 'Φορτιστής', 'Ασθενοφόρο', 'Μάγειρας', 'Μουσείο', 'Νάνος', 'Ζώνη', 'Ώμος', 'Μελωδία',
+            'Λύκος', 'Τούρτα', 'Κλειδί', 'Μπαταρία', 'Περιπολικό', 'Αγρότης', 'Θέατρο', 'Γίγαντας', 'Γραβάτα', 'Χέρι', 'Ρυθμός',
+            'Αλεπού', 'Παγωτό', 'Κλειδαριά', 'Καλώδιο', 'Πυροσβεστικό', 'Πιλότος', 'Σινεμά', 'Τρολ', 'Δαχτυλίδι', 'Αγκώνας', 'Στίχος',
+            'Λαγός', 'Μπισκότο', 'Χαλί', 'Πρίζα', 'Τρακτέρ', 'Οδηγός', 'Γήπεδο', 'Μάγισσα', 'Κολιέ', 'Παλάμη', 'Νότα',
+            'Ποντίκι', 'Ψωμί', 'Κουρτίνα', 'Διακόπτης', 'Ελικόπτερο', 'Μηχανικός', 'Γυμναστήριο', 'Μάγος', 'Σκουλαρίκι', 'Δάχτυλο', 'Συγχορδία',
+            'Χάμστερ', 'Τυρί', 'Μαξιλάρι', 'Φακός', 'Τζετ', 'Ηλεκτρολόγος', 'Πάρκο', 'Νεράιδα', 'Βραχιόλι', 'Αντίχειρας', 'Μπάντα',
+            'Αετός', 'Γάλα', 'Κουβέρτα', 'Ανεμιστήρας', 'Πύραυλος', 'Υδραυλικός', 'Ζωολογικός', 'Άγγελος', 'Ρολόι', 'Στήθος', 'Ορχήστρα',
+            'Κουκουβάγια', 'Καφές', 'Σεντόνι', 'Σόμπα', 'Διαστημόπλοιο', 'Ξυλουργός', 'Ενυδρείο', 'Δαίμονας', 'Γυαλιά', 'Κοιλιά', 'Συναυλία',
+            'Καρχαρίας', 'Τσάι', 'Πάπλωμα', 'Κλιματιστικό', 'Υποβρύχιο', 'Επιστήμονας', 'Παραλία', 'Θεός', 'Μπότα', 'Πλάτη', 'Χορός',
+            'Φάλαινα', 'Χυμός', 'Φλιτζάνι', 'Ψυγείο', 'Πλοίο', 'Αστροναύτης', 'Δάσος', 'Θεά', 'Σανδάλι', 'Πόδι', 'Ζωγραφιά',
+            'Δελφίνι', 'Αναψυκτικό', 'Ποτήρι', 'Φούρνος', 'Γιοτ', 'Στρατιώτης', 'Βουνό', 'Ήρωας', 'Παντόφλα', 'Γόνατο', 'Σχέδιο',
+            'Χταπόδι', 'Μπύρα', 'Πιάτο', 'Μικροκύματα', 'Φέρι', 'Ντετέκτιβ', 'Ποτάμι', 'Κακός', 'Τακούνι', 'Πατούσα', 'Γλυπτό',
+            'Αράχνη', 'Κρασί', 'Μπολ', 'Τοστιέρα', 'Κανό', 'Κατάσκοπος', 'Λίμνη', 'Τέρας', 'Αθλητικό', 'Καρδιά', 'Φωτογραφία',
+            'Φίδι', 'Κοτόπουλο', 'Πιρούνι', 'Μίξερ', 'Καγιάκ', 'Δικαστής', 'Θάλασσα', 'Θηρίο', 'Στολή', 'Εγκέφαλος', 'Ταινία',
+            'Σαύρα', 'Μπριζόλα', 'Κουτάλι', 'Βραστήρας', 'Πατίνι', 'Βασιλιάς', 'Ωκεανός', 'Πνεύμα', 'Κοστούμι', 'Πνεύμονας', 'Θέατρο',
+            'Βάτραχος', 'Ψάρι', 'Μαχαίρι', 'Πλυντήριο', 'Τρόλεϊ', 'Βασίλισσα', 'Έρημος', 'Ψυχή', 'Πιτζάμα', 'Κόκαλο', 'Ποίημα',
+            'Χελώνα', 'Ρύζι', 'Μπουκάλι', 'Σίδερο', 'Μετρό', 'Πρίγκιπας', 'Ζούγκλα', 'Μαγεία', 'Μαγιό', 'Αίμα', 'Ιστορία',
+            'Πεταλούδα', 'Πατάτα', 'Κουτί', 'Σεσουάρ', 'Τραμ', 'Πριγκίπισσα', 'Νησί', 'Κένταυρος', 'Μπικίνι', 'Δέρμα', 'Βιβλίο',
+            'Μέλισσα', 'Ντομάτα', 'Βάζο', 'Σφυρί', 'Τελεφερίκ', 'Μάγος', 'Σπηλιά', 'Μινώταυρος', 'Σορτς', 'Νύχι', 'Μουσείο',
+            'Μυρμήγκι', 'Κρεμμύδι', 'Τσάντα', 'Κατσαβίδι', 'Ασανσέρ', 'Συγγραφέας', 'Κάστρο', 'Σκαθάρι', 'Σκόρδο', 'Σακίδιο', 'Κλειδί',
+            'Κυλιόμενες', 'Δημοσιογράφος', 'Παλάτι', 'Σκορπιός', 'Πιπέρι', 'Πορτοφόλι', 'Πένσα', 'Γέφυρα', 'Φωτογράφος', 'Πύργος',
+            'Κάβουρας', 'Αλάτι', 'Ομπρέλα', 'Πριόνι', 'Τούνελ', 'Σκηνοθέτης', 'Γέφυρα', 'Αστακός', 'Ζάχαρη', 'Χτένα', 'Τρυπάνι',
+            'Δρόμος', 'Σχεδιαστής', 'Εκκλησία', 'Μέδουσα', 'Βούτυρο', 'Βούρτσα', 'Καρφί', 'Αυτοκινητόδρομος', 'Προγραμματιστής', 'Τζαμί',
+            'Αστερίας', 'Λάδι', 'Οδοντόβουρτσα', 'Βίδα', 'Λιμάνι', 'Gamer', 'Ναός', 'Ιππόκαμπος', 'Ξύδι', 'Σαπούνι', 'Παξιμάδι',
+            'Αεροδρόμιο', 'Αθλητής', 'Μοναστήρι', 'Κοράλλι', 'Σάλτσα', 'Πετσέτα', 'Μέτρο', 'Σταθμός', 'Προπονητής', 'Καθεδρικός',
+            'Στρείδι', 'Σούπα', 'Σφουγγάρι', 'Σκάλα', 'Στάση', 'Διαιτητής', 'Φάρος', 'Καμήλα', 'Τοστ', 'Σαμπουάν', 'Φτυάρι',
+            'Γάιδαρος', 'Τηγανίτα', 'Άρωμα', 'Τσουγκράνα', 'Κουρέας', 'Φάρμα', 'Άλογο', 'Βάφλα', 'Καλλυντικά', 'Τσεκούρι', 'Κομμώτρια', 'Αχυρώνας',
+            'Αγελάδα', 'Αυγό', 'Ξυράφι', 'Αλυσίδα', 'Φούρνας', 'Εργοστάσιο', 'Γουρούνι', 'Μπέικον', 'Ψαλίδι', 'Σχοινί', 'Κρεοπώλης', 'Αποθήκη',
+            'Πρόβατο', 'Λουκάνικο', 'Σελοτέιπ', 'Κουβάς', 'Ψαράς', 'Γραφείο', 'Κατσίκα', 'Ζαμπόν', 'Κόλλα', 'Σφουγγαρίστρα', 'Αρχιτέκτονας', 'Κατάστημα',
+            'Κότα', 'Μοσχάρι', 'Χαρτί', 'Σκούπα', 'Οδοντίατρος', 'Μαγαζί', 'Πάπια', 'Χοιρινό', 'Στυλό', 'Φαράσι', 'Κτηνίατρος', 'Εμπορικό',
+            'Γαλοπούλα', 'Αρνί', 'Μολύβι', 'Ταχυδρόμος', 'Αγορά', 'Κροκόδειλος', 'Τάκος', 'Τετράδιο', 'Σερβιτόρος', 'Εστιατόριο',
+            'Αλιγάτορας', 'Μπουρίτο', 'Βιβλίο', 'Γορίλας', 'Νάτσος', 'Περιοδικό', 'Χιμπατζής', 'Πατατάκια', 'Εφημερίδα', 'Κοάλα',
+            'Ποπκορν', 'Γράμμα', 'Πλατύποδας', 'Ντόνατ', 'Φάκελος', 'Ρακούν', 'Κρουασάν', 'Γραμματόσημο', 'Σκίουρος', 'Μάφιν',
+            'Ημερολόγιο', 'Νυχτερίδα', 'Κουλούρι', 'Χάρτης', 'Σκαντζόχοιρος', 'Τσουρέκι', 'Υδρόγειος', 'Παγώνι', 'Ανανάς', 'Παπαγάλος',
+            'Μάνγκο', 'Φλαμίνγκο', 'Ροδάκινο', 'Κύκνος', 'Αχλάδι', 'Χήνα', 'Κεράσι', 'Περιστέρι', 'Λεμόνι', 'Κοράκι', 'Λάιμ',
+            'Γεράκι', 'Αβοκάντο', 'Τσικνιάς', 'Καρύδα', 'Στρουθοκάμηλος', 'Βατόμουρο', 'Ρινόκερος', 'Καρότο', 'Ιπποπόταμος', 'Μπρόκολο',
+            'Βουβάλι', 'Σπανάκι', 'Ελάφι', 'Καλαμπόκι', 'Τάρανδος', 'Αρακάς', 'Βίσονας', 'Φασόλια', 'Γαζέλα', 'Μανιτάρι', 'Τσιτάχ',
+            'Κολοκύθα', 'Λεοπάρδαλη', 'Αγγούρι', 'Πάνθηρας', 'Μαρούλι', 'Σουβλάκι', 'Γύρος', 'Μουσακάς', 'Παστίτσιο', 'Φέτα',
+            'Ελιά', 'Ούζο', 'Τσίπουρο', 'Κουραμπιές', 'Μελομακάρονο'
         ];
 
         // Pick 2 distinct random keys
@@ -127,6 +104,8 @@ class GameController extends Controller
             Mail::to($email)->send(new RoleAssignment($isImpostor, $assignedWord));
         }
 
-        return back()->with('status', "Το email στάλθηκε σε $playerCount παίκτες!");
+        return back()
+            ->with('status', "Το email στάλθηκε σε $playerCount παίκτες!")
+            ->withInput();
     }
 }

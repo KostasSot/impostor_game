@@ -74,7 +74,7 @@
                 <div class="text-4xl font-bold text-white timer-text tracking-widest" id="timer-display">
                     {{ str_pad(session('timerDuration'), 2, '0', STR_PAD_LEFT) }}:00
                 </div>
-                <p class="text-xs text-red-400 mt-1 uppercase tracking-wide">Εναπομείναντας χρόνος</p>
+                <p class="text-xs text-red-400 mt-1 uppercase tracking-wide">Εναπομειναντας χρόνος</p>
                 <input type="hidden" id="initial-timer-minutes" value="{{ session('timerDuration') }}">
             </div>
         @endif

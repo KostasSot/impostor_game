@@ -91,11 +91,19 @@ class GameController extends Controller
             $randomIndices = [$randomIndices];
         }
 
+        //store impostor emails for reveal feature
+        $impostorEmails = [];
+
 
         foreach ($players as $index => $email) {
 
             // Check if current player index is in the list of impostors
             $isImpostor = in_array($index, $randomIndices);
+
+            //store the email in the array
+            if ($isImpostor) {
+                $impostorEmails[] = $email;
+            }
 
             // Assign word
             $assignedWord = $isImpostor ? $impostorWord : $crewWord;
@@ -106,6 +114,7 @@ class GameController extends Controller
 
         return back()
             ->with('status', "Το email στάλθηκε σε $playerCount παίκτες!")
+            ->with('impostors', $impostorEmails)
             ->withInput();
     }
 }

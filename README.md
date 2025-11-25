@@ -44,7 +44,7 @@ Mail: SMTP (Gmail App Passwords)
 
 Clone the repository:
 
-git clone [https://github.com/yourusername/impostor-game.git](https://github.com/yourusername/impostor-game.git)
+git clone https://github.com/KostasSot/impostor_game.git
 cd impostor-game
 
 

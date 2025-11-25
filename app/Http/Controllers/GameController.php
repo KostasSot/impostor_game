@@ -112,9 +112,15 @@ class GameController extends Controller
             Mail::to($email)->send(new RoleAssignment($isImpostor, $assignedWord));
         }
 
+        $timerDuration = null;
+        if ($request->has('timer_enabled') && $request->input('timer_duration')) {
+            $timerDuration = $request->input('timer_duration');
+        }
+
         return back()
             ->with('status', "Το email στάλθηκε σε $playerCount παίκτες!")
             ->with('impostors', $impostorEmails)
+            ->with('timerDuration', $timerDuration)
             ->withInput();
     }
 }

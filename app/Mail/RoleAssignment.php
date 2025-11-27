@@ -14,14 +14,16 @@ class RoleAssignment extends Mailable
 
     public $isImpostor;
     public $assignedWord;
+    public $revealedImpostors;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(bool $isImpostor, string $assignedWord)
+    public function __construct(bool $isImpostor, ?string $assignedWord, ?array $revealedImpostors = null)
     {
         $this->isImpostor = $isImpostor;
         $this->assignedWord = $assignedWord;
+        $this->revealedImpostors = $revealedImpostors;
     }
 
     /**

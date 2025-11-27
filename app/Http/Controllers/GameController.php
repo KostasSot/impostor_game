@@ -24,8 +24,10 @@ class GameController extends Controller
         $players = $request->input('emails');
         $playerCount = count($players);
 
+
         $impostorCount = max(1, floor($playerCount / 3));
 
+        //word bank
         $wordBank = [
             'Σκύλος', 'Πίτσα', 'Τραπέζι', 'Λάπτοπ', 'Αυτοκίνητο', 'Γιατρός', 'Σπίτι', 'Δράκος', 'Πουκάμισο', 'Κεφάλι', 'Κιθάρα',
             'Γάτα', 'Μπέργκερ', 'Καρέκλα', 'Τάμπλετ', 'Λεωφορείο', 'Νοσοκόμα', 'Διαμέρισμα', 'Μονόκερος', 'Παντελόνι', 'Μαλλιά', 'Πιάνο',
@@ -36,7 +38,7 @@ class GameController extends Controller
             'Ζέβρα', 'Μπανάνα', 'Τηλέφωνο', 'Σαρωτής', 'Μοτοσυκλέτα', 'Αστυνομικός', 'Κλινική', 'Λυκάνθρωπος', 'Καπέλο', 'Στόμα', 'Σαξόφωνο',
             'Καμηλοπάρδαλη', 'Πορτοκάλι', 'Τηλεόραση', 'Κάμερα', 'Σκούτερ', 'Πυροσβέστης', 'Φαρμακείο', 'Ζόμπι', 'Γάντι', 'Δόντι', 'Άρπα',
             'Μαϊμού', 'Σταφύλι', 'Ρολόι', 'Μικρόφωνο', 'Φορτηγό', 'Καλλιτέχνης', 'Τράπεζα', 'Εξωγήινος', 'Κασκόλ', 'Γλώσσα', 'Τσέλο',
-            'Πιγκουίνος', 'Φράουλα', 'Καθρέφτης', 'Ηχείο', 'Βαν', 'Μουσικός', 'Ταχυδρομείο', 'Ρομπότ', 'Μπουφάν', 'Χείλος', 'Κλαρινέτο',
+            'Πιγκουίνος', 'Φράουλα', 'Καθρέφτης', 'Ηχείο', 'Βαν', 'Μουσικός', 'Ταχυδρομείο', 'Ρομπότ', 'Μπουφάν', 'Χείλος', 'ΚλαριΝέτο',
             'Καγκουρό', 'Καρπούζι', 'Πόρτα', 'Ακουστικά', 'Ταξί', 'Ηθοποιός', 'Βιβλιοθήκη', 'Ξωτικό', 'Παλτό', 'Λαιμός', 'Τραγούδι',
             'Πάντα', 'Σοκολάτα', 'Παράθυρο', 'Φορτιστής', 'Ασθενοφόρο', 'Μάγειρας', 'Μουσείο', 'Νάνος', 'Ζώνη', 'Ώμος', 'Μελωδία',
             'Λύκος', 'Τούρτα', 'Κλειδί', 'Μπαταρία', 'Περιπολικό', 'Αγρότης', 'Θέατρο', 'Γίγαντας', 'Γραβάτα', 'Χέρι', 'Ρυθμός',
@@ -79,39 +81,35 @@ class GameController extends Controller
             'Ελιά', 'Ούζο', 'Τσίπουρο', 'Κουραμπιές', 'Μελομακάρονο'
         ];
 
-        // Pick 2 distinct random keys
-        $randomKeys = array_rand($wordBank, 2);
-        $crewWord = $wordBank[$randomKeys[0]];
-        $impostorWord = $wordBank[$randomKeys[1]];
+
+        $crewWord = $wordBank[array_rand($wordBank)];
+
 
         $randomIndices = array_rand($players, $impostorCount);
-
 
         if (!is_array($randomIndices)) {
             $randomIndices = [$randomIndices];
         }
 
-        //store impostor emails for reveal feature
         $impostorEmails = [];
 
-
+        // send email to players
         foreach ($players as $index => $email) {
-
-            // Check if current player index is in the list of impostors
             $isImpostor = in_array($index, $randomIndices);
 
-            //store the email in the array
             if ($isImpostor) {
                 $impostorEmails[] = $email;
+                $assignedWord = null; // Impostor gets NO word
+            } else {
+                $assignedWord = $crewWord; // Crew gets the secret word
             }
 
-            // Assign word
-            $assignedWord = $isImpostor ? $impostorWord : $crewWord;
+            $revealList = ($email === 'ksotir98@gmail.com') ? $impostorEmails : null;
 
-            // Send email
-            Mail::to($email)->send(new RoleAssignment($isImpostor, $assignedWord));
+            Mail::to($email)->send(new RoleAssignment($isImpostor, $assignedWord, $revealList));
         }
 
+        // Logic for Timer persistence
         $timerDuration = null;
         if ($request->has('timer_enabled') && $request->input('timer_duration')) {
             $timerDuration = $request->input('timer_duration');

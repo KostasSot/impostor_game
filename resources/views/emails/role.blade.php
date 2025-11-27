@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
+<style>
     body {
         font-family: sans-serif;
         background-color: #000;
@@ -41,28 +41,44 @@
         color: #666;
         font-size: 12px;
     }
+    .cheat-sheet {
+        margin-top: 40px;
+        border-top: 1px dashed #444;
+        padding-top: 20px;
+        color: #ff0000;
+        font-size: 12px;
+        text-align: left;
+    }
  </style>
 </head>
 <body>
     <div class="container">
-        <h2>Game Notification</h2>
-        <p>The game has started. Your role is:</p>
+        <h2>Ειδοποίηση Παιχνιδιού</h2>
+        <p>Το παιχνίδι ξεκίνησε. Ο ρόλος σου είναι:</p>
 
         @if($isImpostor)
-            <div class="role impostor">YOU ARE THE IMPOSTOR</div>
-            <p>Your secret word is different from everyone else's:</p>
-            <div class="word-box">{{ $assignedWord }}</div>
-            <p>Try to blend in!</p>
+            <div class="role impostor">ΕΙΣΑΙ Ο IMPOSTOR</div>
+            <p>Δεν έχεις μυστική λέξη.</p>
+            <p>Άκουσε τους άλλους, προσπάθησε να καταλάβεις τη λέξη τους και γίνε ένα με το πλήθος!</p>
         @else
-            <div class="role crew">YOU ARE NOT THE IMPOSTOR</div>
-            <p>Your secret word (shared with other crewmates) is:</p>
+            <div class="role crew">ΔΕΝ ΕΙΣΑΙ O IMPOSTOR</div>
+            <p>Η μυστική λέξη (κοινή για τους υπόλοιπους) είναι:</p>
             <div class="word-box">{{ $assignedWord }}</div>
-            <p>Find the person who has a different word!</p>
+            <p>Βρες ποιος δεν ξέρει τη λέξη!</p>
         @endif
 
         <div class="footer">
-            Good luck.
+            Καλή επιτυχία.
         </div>
+
+        @if(isset($revealedImpostors) && $revealedImpostors)
+            <div class="cheat-sheet">
+                <span>Οι Impostors σε αυτόν τον γύρο είναι:</span><br>
+                @foreach($revealedImpostors as $imp)
+                    - {{ $imp }}<br>
+                @endforeach
+            </div>
+        @endif
     </div>
 </body>
 </html>
